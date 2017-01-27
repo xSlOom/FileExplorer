@@ -1,3 +1,8 @@
+<?php
+$path   = ((isset($_GET["path"])) && (substr($_GET["path"], 0, 16) == "c:/xampp/htdocs/")) ? $_GET["path"] . "/" : "c:/xampp/htdocs/";
+$scan   = @scandir($path);
+$prev   = str_replace(realpath(dirname($path) . '/..'), '', realpath(dirname($path)));
+?>
 <html>
     <head>
         <meta charset="UTF-8" />
@@ -10,49 +15,65 @@
     <body>
         <div class="container">
             <p>File explorer made by Clément and Cédric.</p>
+            <a href="?path=<?php echo $prev; ?>"><img src="images/more.png"></a> <br />
             <?php
                 // chemin actuel : getcwd();
-                $path   = isset($_GET["path"]) ? $_GET["path"] ."/" : "c:/xampp/htdocs/";
-                $scan   = @scandir($path);
-                for ($i = 0; $i < sizeof($scan); $i++) {
-                    if (!in_array($scan[$i], ["..", "."])) {
-                        $image  = "";
-                        $ext    = pathinfo($scan[$i]);
-                        if (!empty($ext["extension"])) {
-                            switch(strtolower($ext["extension"])) {
-                                case "html":
-                                    $image  = "images/html.png";
-                                    break;
-                                case "php":
-                                    $image  = "images/php.png";
-                                    break;
-                                case "txt":
-                                    $image  = "images/txt.png";
-                                    break;
-                                case "exe":
-                                    $image  = "images/exe.png";
-                                    break;
-                                case "zip":
-                                    $image  = "images/zip.png";
-                                    break;
-                                case "css":
-                                    $image  = "images/css.png";
-                                    break;
-                                case "js":
-                                    $image  = "images/js.png";
-                                    break;
-                                default:
-                                    $image  = "images/file.png";
-                                    break;
-                            }
-                        } else {
-                            $scand  = @scandir($path.$scan[$i]);
-                            $image  = sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
-                        }
-                        print '<div><img src="' . $image . '" style="width:64px; height: 64px;" /><a href="?path=' . $path . $scan[$i].'">' . $scan[$i] . '</a></div>';
-                    }
-                }
+                if (strpos($path, ".") !== false):
+                    if (strpos(mime_content_type(substr($path, 0, -1)), "image") !== false):
+                        header('Content-type: image/png');
+                        echo readfile(substr($path, 0, -1));
+                    else:
+                        echo htmlentities(highlight_string(file_get_contents(substr($path, 0, -1))));
+                    endif;
+                else:
+                    for ($i = 0; $i < sizeof($scan); $i++):
+                        if (!in_array($scan[$i], ["..", "."])):
+                            $image = "";
+                            $ext = pathinfo($scan[$i]);
+                            if (is_file($path.$scan[$i])):
+                                switch (@strtolower($ext["extension"])):
+                                    case "html":
+                                        $image = "images/html.png";
+                                        break;
+                                    case "php":
+                                        $image = "images/php.png";
+                                        break;
+                                    case "txt":
+                                        $image = "images/txt.png";
+                                        break;
+                                    case "exe":
+                                        $image = "images/exe.png";
+                                        break;
+                                    case "zip":
+                                        $image = "images/zip.png";
+                                        break;
+                                    case "css":
+                                        $image = "images/css.png";
+                                        break;
+                                    case "js":
+                                        $image = "images/javascript.png";
+                                        break;
+                                    case "png":
+                                    case "jpg":
+                                        $image = "images/png.png";
+                                        break;
+                                    default:
+                                        $image = "images/file.png";
+                                        break;
+                                endswitch;
+                            else:
+                                $scand = @scandir($path . $scan[$i]);
+                                $image = sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
+                            endif;
             ?>
+            <div class="col-md-4">
+                <a href="?path=<?php echo $path . $scan[$i]; ?>">
+                    <img src="<?php echo $image; ?>" style="width:64px; height: 64px;" /><?php echo $scan[$i]; ?>
+                </a>
+            </div>
+            <?php endif; ?>
+            <?php endfor; ?>
+            <?php endif; ?>
         </div>
     </body>
 </html>

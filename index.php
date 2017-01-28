@@ -1,5 +1,5 @@
 <?php
-$path   = ((isset($_GET["path"])) && (substr($_GET["path"], 0, 16) == "c:/xampp/htdocs/")) ? $_GET["path"] . "/" : "c:/xampp/htdocs/";
+$path   = ((isset($_GET["path"])) && (substr(strtolower($_GET["path"]), 0, 16) == "c:/xampp/htdocs/")) ? $_GET["path"] . "/" : "c:/xampp/htdocs/";
 $scan   = @scandir($path);
 $prev   = str_replace(realpath(dirname($path) . '/..'), '', realpath(dirname($path)));
 ?>

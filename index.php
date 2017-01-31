@@ -22,7 +22,7 @@ $file   = new file();
             <?php
             if (strpos($file->path, ".") !== false):
                 if (strpos(mime_content_type(substr($file->path, 0, -1)), "image") !== false):
-                    print '<img src="' . str_replace('/opt/lampp/htdocs', '', $file->Rpath) . '" />';
+                    print '<img src="' . str_replace('c:/xampp/htdocs/', '', $file->Rpath) . '" />';
                 elseif (strpos($file->Rpath, "pdf")):
                     echo "Coming soon";
                 elseif (strpos($file->Rpath, "ttf")):

@@ -14,7 +14,7 @@ $file   = new file();
     </head>
     <body>
         <div class="entete">
-            <h2 id="title">La spéléo du fichier made by Clément and Cédric.</h2>
+            /*<h2 id="title">La spéléo du fichier made by Clément and Cédric.</h2>*/
         </div>
         <div class="container">
             <p><strong>Current directory:</strong> <?php echo str_replace("/", " > ", $file->Rpath); ?></p>

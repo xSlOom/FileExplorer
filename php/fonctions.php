@@ -2,13 +2,15 @@
 
 class file {
 
+    public $main;
     public $path;
     public $scan;
     public $prev;
     public $Rpath;
 
     function __construct() {
-        $this->path     = ((isset($_GET["path"])) && (substr($_GET["path"], 0, 16) == "c:/xampp/htdocs/")) ? $_GET["path"] . "/" : "c:/xampp/htdocs/";
+        $this->main     = "/opt/lampp/htdocs/";
+        $this->path     = ((isset($_GET["path"])) && (substr($_GET["path"], 0, strlen($this->main)) == $this->main)) ? $_GET["path"] . "/" : $this->main;
         $this->scan     = @scandir($this->path);
         $this->Rpath    = substr($this->path, 0, -1);
         $this->prev     = $this->previousPath();
@@ -18,6 +20,17 @@ class file {
         $prevP = explode("/", $this->Rpath);
         array_pop($prevP);
         return implode("/", $prevP);
+    }
+
+    function getDir($dirname) {
+        $new   = "";
+        $prevP = explode("/", $this->Rpath);
+        for ($i = 0; $i < sizeof($prevP); $i++) {
+            if (strtolower($prevP[$i]) == $dirname) {
+                $new   = @explode($prevP[$i], $this->Rpath);
+                return $new[0] . $prevP[$i];
+            }
+        }
     }
 
     function getExtensions($ext)  {

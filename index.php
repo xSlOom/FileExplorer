@@ -15,7 +15,6 @@ $file   = new file();
     <body>
         <div class="entete">
             <img id="image" src="images/entete.gif">
-            /*<h2 id="title">La spéléo du fichier made by Clément and Cédric.</h2>*/
         </div>
         <div class="container">
             <p><strong>Current directory:</strong> <?php echo str_replace("/", " > ", $file->Rpath); ?></p>

@@ -13,7 +13,7 @@ class file {
         $this->Rpath    = substr($this->path, 0, -1);
         $this->prev     = $this->previousPath();
     }
-    
+
     function previousPath() {
         $prevP = explode("/", $this->Rpath);
         array_pop($prevP);

@@ -18,7 +18,7 @@ $file   = new file();
         </div>
         <div class="container">
             <p><strong>Current directory:</strong> <?php echo str_replace("/", " > ", $file->Rpath); ?></p>
-           <!-- <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />-->
+            <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
             <?php
             if (strpos($file->path, ".") !== false):
                 if (strpos(mime_content_type(substr($file->path, 0, -1)), "image") !== false):

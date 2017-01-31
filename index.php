@@ -17,12 +17,20 @@ $file   = new file();
             <img id="image" src="images/entete.gif">
         </div>
         <div class="container">
-            <p><strong>Current directory:</strong> <?php echo str_replace("/", " > ", $file->Rpath); ?></p>
-            <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
-            <?php
-            if (strpos($file->path, ".") !== false):
+           <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
+            <ol class="breadcrumb">
+                <?php
+                    $directory = explode("/", $file->Rpath);
+                    for ($i = 0; $i < sizeof($directory); $i++):
+                        if (in_array($directory[$i], ["opt", "lampp"])) continue;
+                ?>
+                    <li><a href="?path=<?php echo $file->getDir($directory[$i]); ?>"><?php echo $directory[$i]; ?></a></li>
+                <?php endfor; ?>
+            </ol>
+           <?php
+            if ((strpos($file->path, ".") !== false) || (!@opendir($file->path))):
                 if (strpos(mime_content_type(substr($file->path, 0, -1)), "image") !== false):
-                    print '<img src="' . str_replace('c:/xampp/htdocs/', '', $file->Rpath) . '" />';
+                    print '<img src="' . str_replace(substr($file->main, 0, -1), '', $file->Rpath) . '" />';
                 elseif (strpos($file->Rpath, "pdf")):
                     echo "Coming soon";
                 elseif (strpos($file->Rpath, "ttf")):

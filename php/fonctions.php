@@ -11,7 +11,13 @@ class file {
         $this->path     = ((isset($_GET["path"])) && (substr($_GET["path"], 0, 16) == "c:/xampp/htdocs/")) ? $_GET["path"] . "/" : "c:/xampp/htdocs/";
         $this->scan     = @scandir($this->path);
         $this->Rpath    = substr($this->path, 0, -1);
-        $this->prev     = str_replace(realpath(dirname($this->path) . '/..'), '', realpath(dirname($this->path)));
+        $this->prev     = $this->previousPath();
+    }
+    
+    function previousPath() {
+        $prevP = explode("/", $this->Rpath);
+        array_pop($prevP);
+        return implode("/", $prevP);
     }
 
     function getExtensions($ext)  {

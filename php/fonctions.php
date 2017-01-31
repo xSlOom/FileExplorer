@@ -26,7 +26,7 @@ class file {
         $new   = "";
         $prevP = explode("/", $this->Rpath);
         for ($i = 0; $i < sizeof($prevP); $i++) {
-            if (strtolower($prevP[$i]) == $dirname) {
+            if ($prevP[$i] == $dirname) {
                 $new   = @explode($prevP[$i], $this->Rpath);
                 return $new[0] . $prevP[$i];
             }

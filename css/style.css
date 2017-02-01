@@ -62,4 +62,10 @@ pre {
  
  height: 50px;
  text-align: center;
+ font-size: 20px;
 }
+.thumbnail
+{
+	height: 220px;
+}
+

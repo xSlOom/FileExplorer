@@ -2,7 +2,7 @@
 
 class file {
 	
-	public $folder = [], $files = [];
+    public $folder = [], $files = [];
     public $main;
     public $path;
     public $scan;
@@ -34,16 +34,16 @@ class file {
         }
     }
 	
-	function sizeconvert($size, $precision = 2) {
-		$units = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
-		$step = 1024;
-		$i = 0;
-		while (($size / $step) > 0.9) {
-			$size = $size / $step;
-			$i++;
-		}
-		return round($size, $precision).$units[$i];
+    function sizeconvert($size, $precision = 2) {
+	$units = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+	$step = 1024;
+	$i = 0;
+	while (($size / $step) > 0.9) {
+		$size = $size / $step;
+		$i++;
 	}
+	return round($size, $precision).$units[$i];
+    }
 
     function getExtensions($ext)  {
         switch ($ext) {

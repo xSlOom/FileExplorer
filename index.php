@@ -20,8 +20,8 @@ $file   = new file();
     </head>
     <body>
         <div class="page-header">
-			<h1 class="text-center">XPlorator<small> Made by Clément & Cédric</small></h1>
-		</div>
+		<h1 class="text-center">XPlorator<small> Made by Clément & Cédric</small></h1>
+	</div>
         <div class="container">
            <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
             <ol class="breadcrumb">
@@ -39,12 +39,12 @@ $file   = new file();
                        $image = "";
                        $ext = pathinfo($file->scan[$i]);
                        if (is_file($file->path.$file->scan[$i])):
-                           $image  		= @$file->getExtensions(strtolower($ext["extension"]));
-                           $file->files[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
+                           $image  = @$file->getExtensions(strtolower($ext["extension"]));
+                           $file->files[]= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                        else:
-                           $scand 			= @scandir($file->path . $file->scan[$i]);
-                           $image 			= sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
-                           $file->folder[]	= ["ext" => $image, "p" => $file->path, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
+                           $scand = @scandir($file->path . $file->scan[$i]);
+                           $image = sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
+                           $file->folder[] = ["ext" => $image, "p" => $file->path, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                        endif;
                    endif;
                endfor;
@@ -98,7 +98,7 @@ $file   = new file();
                    </div>
                </div>
            </div>
-			<?php endfor; ?>
+	<?php endfor; ?>
         </div>
     </body>
 </html>

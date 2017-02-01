@@ -49,9 +49,9 @@ $file   = new file();
                             $image = sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
 			    $file->folder[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                         endif;
-		      endif;
-		    endfor;				
-		    for ($y = 0; $y < sizeof($file->folder); $y++):
+		     endif;
+		  endfor;
+		  for ($y = 0; $y < sizeof($file->folder); $y++):
 		?>
 		<div class="col-md-4">
 			<div class="thumbnail">

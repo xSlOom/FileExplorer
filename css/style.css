@@ -69,4 +69,9 @@ pre {
 	height: 225px;
 	padding-top: 15px;
 }
+#closeButton
+{
+	border-radius: 0px;
+}
+
 

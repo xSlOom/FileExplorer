@@ -8,8 +8,8 @@ $file   = new file();
         <title>File explorer</title>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.9.0/styles/default.min.css">
         <script src="//cdn.jsdelivr.net/highlight.js/9.9.0/highlight.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
@@ -20,35 +20,35 @@ $file   = new file();
     </head>
     <body>
         <div class="page-header">
-		<h1 class="text-center">XPlorator<small> Made by Clément & Cédric</small></h1>
-	</div>
+			<h1 class="text-center">XPlorator<small style="color: #ffffff"> Made by Clément & Cédric</small></h1>
+		</div>
         <div class="container">
-	  <div class="col-md-12">
-            <div id="navigation" >	
-              <ol class="breadcrumb">
-                <?php
-                    $directory = explode("/", $file->Rpath);
-                    for ($i = 0; $i < sizeof($directory); $i++):
-                        if (in_array($directory[$i], ["opt", "lampp"])) continue;
-                ?>
-                    <li><a href="?path=<?php echo $file->getDir($directory[$i]); ?>"><?php echo $directory[$i]; ?></a></li>
-                <?php endfor; ?>
-              </ol>
-	     </div>
-	   </div>
-	     <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
+            <div class="col-md-12">
+                <div id="navigation" >
+                    <ol class="breadcrumb">
+                        <?php
+                        $directory = explode("/", $file->Rpath);
+                        for ($i = 0; $i < sizeof($directory); $i++):
+                            if (in_array($directory[$i], ["opt", "lampp"])) continue;
+                            ?>
+                            <li><a href="?path=<?php echo $file->getDir($directory[$i]); ?>"><?php echo $directory[$i]; ?></a></li>
+                        <?php endfor; ?>
+                    </ol>
+                </div>
+            </div>
+            <a href="?path=<?php echo $file->prev; ?>"><img src="images/back.png" style="margin-bottom: 2%"></a> <br />
            <?php
                for ($i = 0; $i < sizeof($file->scan); $i++):
                    if (!in_array($file->scan[$i], ["..", "."])):
                        $image = "";
                        $ext = pathinfo($file->scan[$i]);
                        if (is_file($file->path.$file->scan[$i])):
-                           $image  = @$file->getExtensions(strtolower($ext["extension"]));
-                           $file->files[]= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
+                           $image  		= @$file->getExtensions(strtolower($ext["extension"]));
+                           $file->files[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                        else:
-                           $scand = @scandir($file->path . $file->scan[$i]);
-                           $image = sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
-                           $file->folder[] = ["ext" => $image, "p" => $file->path, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
+                           $scand 			= @scandir($file->path . $file->scan[$i]);
+                           $image 			= sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
+                           $file->folder[]	= ["ext" => $image, "p" => $file->path, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                        endif;
                    endif;
                endfor;
@@ -80,8 +80,8 @@ $file   = new file();
                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                        <h4 class="modal-title">Preview for : <?php echo $file->files[$y]["path"]; ?></h4>
                                    </div>
-                                   <div class="modal-body container">
-                                       <div class="col-md-8">
+                                   <div class="modal-body">
+                                       <div class="col-md-12">
                                            <p>
                                                <?php
                                                if (strpos(mime_content_type($file->files[$y]["path"]), "image") !== false):
@@ -94,6 +94,7 @@ $file   = new file();
                                        </div>
                                    </div>
                                    <div class="modal-footer">
+                                       <a href="php/download.php?download=<?php echo $file->files[$y]["path"] . "|" .$file->files[$y]["name"]; ?>" class="btn btn-success" role="button">Download</a>
                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                    </div>
                                </div>
@@ -102,20 +103,19 @@ $file   = new file();
                    </div>
                </div>
            </div>
-	<?php endfor; ?>
+			<?php endfor; ?>
         </div>
     </body>
-  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
     <script type='text/javascript'>
-    $(function(){
-    $(window).scroll(function () {//Au scroll dans la fenetre on déclenche la fonction
-      if ($(this).scrollTop() > 121) { //si on a défilé de plus de 150px du haut vers le bas
-          $('#navigation').addClass("navbar-fixed-top"); //on ajoute la classe "fixNavigation" à <div id="navigation">
-      } 
-      else {
-      $('#navigation').removeClass("navbar-fixed-top");//sinon on retire la classe "fixNavigation" à <div id="navigation">
-      }
-   });
- });
- </script>
+        $(function(){
+            $(window).scroll(function () {//Au scroll dans la fenetre on déclenche la fonction
+                if ($(this).scrollTop() > 121) { //si on a défilé de plus de 150px du haut vers le bas
+                    $('#navigation').addClass("navbar-fixed-top"); //on ajoute la classe "fixNavigation" à <div id="navigation">
+                }
+                else {
+                    $('#navigation').removeClass("navbar-fixed-top");//sinon on retire la classe "fixNavigation" à <div id="navigation">
+                }
+            });
+        });
+    </script>
 </html>

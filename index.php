@@ -23,8 +23,9 @@ $file   = new file();
 		<h1 class="text-center">XPlorator<small> Made by Clément & Cédric</small></h1>
 	</div>
         <div class="container">
-           <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
-            <ol class="breadcrumb">
+	  <div class="col-md-12">
+            <div id="navigation" >	
+              <ol class="breadcrumb">
                 <?php
                     $directory = explode("/", $file->Rpath);
                     for ($i = 0; $i < sizeof($directory); $i++):
@@ -32,7 +33,10 @@ $file   = new file();
                 ?>
                     <li><a href="?path=<?php echo $file->getDir($directory[$i]); ?>"><?php echo $directory[$i]; ?></a></li>
                 <?php endfor; ?>
-            </ol>
+              </ol>
+	     </div>
+	   </div>
+	     <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
            <?php
                for ($i = 0; $i < sizeof($file->scan); $i++):
                    if (!in_array($file->scan[$i], ["..", "."])):
@@ -101,4 +105,17 @@ $file   = new file();
 	<?php endfor; ?>
         </div>
     </body>
+  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+    <script type='text/javascript'>
+    $(function(){
+    $(window).scroll(function () {//Au scroll dans la fenetre on déclenche la fonction
+      if ($(this).scrollTop() > 121) { //si on a défilé de plus de 150px du haut vers le bas
+          $('#navigation').addClass("navbar-fixed-top"); //on ajoute la classe "fixNavigation" à <div id="navigation">
+      } 
+      else {
+      $('#navigation').removeClass("navbar-fixed-top");//sinon on retire la classe "fixNavigation" à <div id="navigation">
+      }
+   });
+ });
+ </script>
 </html>

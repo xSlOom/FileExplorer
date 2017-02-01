@@ -14,8 +14,8 @@ $file   = new file();
     </head>
     <body>
         <div class="page-header">
-			<h1 class="text-center">XPlorator<small> Made by Clément & Cédric</small></h1>
-		</div>
+		<h1 class="text-center">XPlorator<small> Made by Clément & Cédric</small></h1>
+	</div>
         <div class="container">
            <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
             <ol class="breadcrumb">
@@ -42,42 +42,42 @@ $file   = new file();
                         $image = "";
                         $ext = pathinfo($file->scan[$i]);
                         if (is_file($file->path.$file->scan[$i])):
-                            $image  		= @$file->getExtensions(strtolower($ext["extension"]));
-							$file->files[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
+                            $image  = @$file->getExtensions(strtolower($ext["extension"]));
+			    $file->files[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                         else:
-                            $scand 			= @scandir($file->path . $file->scan[$i]);
-                            $image 			= sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
-							$file->folder[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
+                            $scand = @scandir($file->path . $file->scan[$i]);
+                            $image = sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
+			    $file->folder[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                         endif;
-					endif;
-				endfor;
+		     endif;
+		  endfor;
 				
-				for ($y = 0; $y < sizeof($file->folder); $y++):
-				?>
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img src="<?php echo $file->folder[$y]["ext"]; ?>" style="width:64px; height: 64px;">
-						<div class="caption">
-							<h3 class="text-center"><?php echo $file->folder[$y]["name"]; ?></h3>
-							<p style="text-align:center"><a href="?path=<?php echo $file->folder[$y]["path"]; ?>" class="btn btn-primary" role="button">View</a></p>
-						</div>
-					</div>
+		  for ($y = 0; $y < sizeof($file->folder); $y++):
+		?>
+		<div class="col-md-4">
+			<div class="thumbnail">
+				<img src="<?php echo $file->folder[$y]["ext"]; ?>" style="width:64px; height: 64px;">
+				<div class="caption">
+					<h3 class="text-center"><?php echo $file->folder[$y]["name"]; ?></h3>
+					<p style="text-align:center"><a href="?path=<?php echo $file->folder[$y]["path"]; ?>" class="btn btn-primary" role="button">View</a></p>
 				</div>
-			<?php endfor; ?>
-			<?php
-			for ($y = 0; $y < sizeof($file->files); $y++):
-				?>
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img src="<?php echo $file->files[$y]["ext"]; ?>" style="width:64px; height: 64px;">
-						<div class="caption">
-							<h3 class="text-center"><?php echo $file->files[$y]["name"]; ?></h3>
-							<p style="text-align:center"><a href="?path=<?php echo $file->files[$y]["path"]; ?>" class="btn btn-primary" role="button">View</a> <?php echo '<a href="#" class="btn btn-default text-center" role="button">Size: ' . $file->sizeconvert(filesize($file->files[$y]["path"])); ?></a></p>
-						</div>
-					</div>
+			</div>
+		</div>
+		<?php endfor; ?>
+		<?php
+		for ($y = 0; $y < sizeof($file->files); $y++):
+		?>
+		<div class="col-md-4">
+			<div class="thumbnail">
+				<img src="<?php echo $file->files[$y]["ext"]; ?>" style="width:64px; height: 64px;">
+				<div class="caption">
+					<h3 class="text-center"><?php echo $file->files[$y]["name"]; ?></h3>
+					<p style="text-align:center"><a href="?path=<?php echo $file->files[$y]["path"]; ?>" class="btn btn-primary" role="button">View</a> <?php echo '<a href="#" class="btn btn-default text-center" role="button">Size: ' . $file->sizeconvert(filesize($file->files[$y]["path"])); ?></a></p>
 				</div>
-			<?php endfor; ?>
-			<?php endif; ?>
+			</div>
+		</div>
+		<?php endfor; ?>
+		<?php endif; ?>
         </div>
     </body>
 </html>

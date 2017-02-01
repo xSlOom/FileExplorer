@@ -8,22 +8,22 @@ body {
 	-webkit-animation: theme 21s linear infinite;
 }
 @-webkit-keyframes theme {
-	0% {
+	/*0% {
 		background: #eb1717;
 	}
 	16% {
 		background: #eb17d5;
-	}
-	33% {
+	}*/
+	0% {
 		background: #2617eb;
 	}
-	50% {
+	25% {
 		background: #17d5eb;
 	}
-	66% {
+	50% {
 		background: #21eb17;
 	}
-	83% {
+	75% {
 		background: #ebad17;
 	}
 	100% {
@@ -35,10 +35,18 @@ body {
 .modal-dialog{
 	overflow-y: initial !important
 }
-.modal-body{
+
+.modal-content {
+	width: 802px;
+}
+.modal-body {
 	max-height: calc(100vh - 200px);
-	max-width: 70%;
+	width: 100%;
 	overflow-y: auto;
+}
+
+pre {
+	width: 100%;
 }
 
 .entete
@@ -50,4 +58,8 @@ body {
 	background-size: 60%;
 	margin-bottom: 3%;
 
+}
+
+.btn-success, .btn-info, .btn-primary {
+	border-radius: 0 !important;
 }

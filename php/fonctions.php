@@ -1,7 +1,8 @@
 <?php
 
 class file {
-
+	
+	public $folder = [], $files = [];
     public $main;
     public $path;
     public $scan;
@@ -11,7 +12,7 @@ class file {
     function __construct() {
         $this->main     = "/opt/lampp/htdocs/";
         $this->path     = ((isset($_GET["path"])) && (substr($_GET["path"], 0, strlen($this->main)) == $this->main)) ? $_GET["path"] . "/" : $this->main;
-        $this->scan     = @scandir($this->path);
+        $this->scan     = @scandir($this->path, 0);
         $this->Rpath    = substr($this->path, 0, -1);
         $this->prev     = $this->previousPath();
     }
@@ -32,6 +33,17 @@ class file {
             }
         }
     }
+	
+	function sizeconvert($size, $precision = 2) {
+		$units = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+		$step = 1024;
+		$i = 0;
+		while (($size / $step) > 0.9) {
+			$size = $size / $step;
+			$i++;
+		}
+		return round($size, $precision).$units[$i];
+	}
 
     function getExtensions($ext)  {
         switch ($ext) {

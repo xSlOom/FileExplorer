@@ -13,9 +13,9 @@ $file   = new file();
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="entete">
-            <img id="image" src="images/entete.gif">
-        </div>
+        <div class="page-header">
+			<h1 class="text-center">XPlorator<small> Made by Clément & Cédric</small></h1>
+		</div>
         <div class="container">
            <a href="?path=<?php echo $file->prev; ?>"><img src="images/more.png"></a> <br />
             <ol class="breadcrumb">
@@ -31,12 +31,10 @@ $file   = new file();
             if ((strpos($file->path, ".") !== false) || (!@opendir($file->path))):
                 if (strpos(mime_content_type(substr($file->path, 0, -1)), "image") !== false):
                     print '<img src="' . str_replace(substr($file->main, 0, -1), '', $file->Rpath) . '" />';
-                elseif (strpos($file->Rpath, "pdf")):
+                elseif ((strpos($file->Rpath, "pdf")) || (strpos($file->Rpath, "ttf")) || (strpos($file->Rpath, "exe"))):
                     echo "Coming soon";
-                elseif (strpos($file->Rpath, "ttf")):
-                    print "Unable to show that file!";
                 else:
-                    echo htmlentities(highlight_string(file_get_contents($file->Rpath)));
+                    echo str_replace('1', '', htmlentities(highlight_string(file_get_contents($file->Rpath))));
                 endif;
             else:
                 for ($i = 0; $i < sizeof($file->scan); $i++):
@@ -44,20 +42,42 @@ $file   = new file();
                         $image = "";
                         $ext = pathinfo($file->scan[$i]);
                         if (is_file($file->path.$file->scan[$i])):
-                            $image  = @$file->getExtensions(strtolower($ext["extension"]));
+                            $image  		= @$file->getExtensions(strtolower($ext["extension"]));
+							$file->files[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                         else:
-                            $scand = @scandir($file->path . $file->scan[$i]);
-                            $image = sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
+                            $scand 			= @scandir($file->path . $file->scan[$i]);
+                            $image 			= sizeof($scand) > 2 ? "images/full.png" : "images/empty.png";
+							$file->folder[]	= ["ext" => $image, "path" => $file->path . $file->scan[$i], "name" => $file->scan[$i]];
                         endif;
-                        ?>
-                        <div class="col-md-4">
-                            <a href="?path=<?php echo $file->path . $file->scan[$i]; ?>">
-                                <img src="<?php echo $image; ?>" style="width:64px; height: 64px;" /><?php echo $file->scan[$i]; ?>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                <?php endfor; ?>
-            <?php endif; ?>
+					endif;
+				endfor;
+				
+				for ($y = 0; $y < sizeof($file->folder); $y++):
+				?>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img src="<?php echo $file->folder[$y]["ext"]; ?>" style="width:64px; height: 64px;">
+						<div class="caption">
+							<h3 class="text-center"><?php echo $file->folder[$y]["name"]; ?></h3>
+							<p style="text-align:center"><a href="?path=<?php echo $file->folder[$y]["path"]; ?>" class="btn btn-primary" role="button">View</a></p>
+						</div>
+					</div>
+				</div>
+			<?php endfor; ?>
+			<?php
+			for ($y = 0; $y < sizeof($file->files); $y++):
+				?>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img src="<?php echo $file->files[$y]["ext"]; ?>" style="width:64px; height: 64px;">
+						<div class="caption">
+							<h3 class="text-center"><?php echo $file->files[$y]["name"]; ?></h3>
+							<p style="text-align:center"><a href="?path=<?php echo $file->files[$y]["path"]; ?>" class="btn btn-primary" role="button">View</a> <?php echo '<a href="#" class="btn btn-default text-center" role="button">Size: ' . $file->sizeconvert(filesize($file->files[$y]["path"])); ?></a></p>
+						</div>
+					</div>
+				</div>
+			<?php endfor; ?>
+			<?php endif; ?>
         </div>
     </body>
 </html>
